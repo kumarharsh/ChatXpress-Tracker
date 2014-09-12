@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="ChatXpress">
+<head>
+  <meta charset="UTF-8">
+  <title>ChatExpress Tracker</title>
+  <link rel="stylesheet" href='//fonts.googleapis.com/css?family=Open+Sans:400,700,700italic,400italic,300,300italic' type='text/css'>
+  <link rel="stylesheet" href='styles/main.css' type='text/css'>
+  <script type="text/javascript" src="scripts/angular.min.js"></script>
+  <script type="text/javascript" src="scripts/main.js"></script>
+</head>
+<body data-ng-controller="MainCtrl">
+  <div id="progress-tracker" class="app-progress vertical-bar">
+    <div class="progress-indicator"
+      style="height: {{ui.progress.value}}%;
+             background-color:hsl({{ui.progress.value * 79/100}}, 75%, 60%)">
+    </div>
+    <div class="progress-text"
+      style="bottom: {{ui.progress.value}}%;
+             text-shadow: 1px 1px 0px hsl({{(ui.progress.value * 79/100)}}, 55%, 50%),
+                          2px 2px 0px hsl({{(ui.progress.value * 79/100)}}, 55%, 50%),
+                          3px 3px 0px hsl({{(ui.progress.value * 79/100)}}, 55%, 50%),
+                          4px 4px 0px hsl({{(ui.progress.value * 79/100)}}, 55%, 50%)">{{ui.progress.text}}</div>
+  </div>
+  <div class="app-content">
+    <h1 class="page-heading">Welcome to {{ui.app}}</h1>
+    <div class="checklist-wrapper">
+      <div class="tabular">
+        <div class="tabular-row">
+          <div class="tabular-cell">
+            <input type="text" name="new_item" id="new-item" class="checklist-input" data-ng-model="ui.newItem" placeholder="Add an item to your list" style="width: 100%;">
+          </div>
+          <div class="tabular-cell" style="width: 190px;">
+            <button type="button" class="button checklist-button" data-ng-click="addToList(ui.newItem)">Add to List</button>
+          </div>
+        </div>
+      </div>
+
+      <ul class="checklist">
+        <li class="checklist-item" data-ng-repeat="item in track.list" data-ng-class="item.completed ? 'done' : 'active'">
+          <span class="item-status" title="Click to toggle status" data-ng-click="toggleStatus(item)"></span>
+          <span data-ng-click="toggleStatus(item)" class="item-name">{{item.name}}</span>
+          <span class="item-remove" title="Remove Item" data-ng-click="removeFromList($index)">&times;</span>
+        </li>
+        <li class="checklist-item empty-item" data-ng-show="!track.list.length">
+          This list is empty. Add something to do here.
+        </li>
+      </ul>
+      <h2 class="page-progress">{{ui.progress.value}}% Completed!</h2>
+    </div>
+  </div>
+</body>
+</html>
